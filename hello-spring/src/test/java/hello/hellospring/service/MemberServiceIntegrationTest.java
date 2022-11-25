@@ -1,30 +1,26 @@
 package hello.hellospring.service;
-//단위 테스트
+//통합테스트
 import hello.hellospring.domain.Member;
 import hello.hellospring.repository.MemberRepository;
 import hello.hellospring.repository.MemoryMemberRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+@SpringBootTest //스프링 컨테이너와 테스트를 같이 실행
+@Transactional//테스트 케이스에서 사용 테스트 시작전에 트랜잭션을 하여 테스트 완료후에는 롤백하여 db에 데이터가 남지 않아 다음 테스트에 영향을 주지 않는다.
+class MemberServiceIntegrationTest {
 
-class MemberServiceTest {
+    @Autowired MemberService memberService;
+    @Autowired
+    MemberRepository memberRepository;
 
-    MemberService memberService;
-    MemoryMemberRepository memberRepository;
 
-    @BeforeEach
-    public void beforeEach(){
-        memberRepository = new MemoryMemberRepository();
-        memberService = new MemberService(memberRepository);
-    }
-
-    @AfterEach
-    public void afterEach(){
-        memberRepository.clearStore();
-    }
 
     @Test
     void 회원가입() {
@@ -64,11 +60,5 @@ class MemberServiceTest {
         //then
     }
 
-    @Test
-    void findMembers() {
-    }
 
-    @Test
-    void findOne() {
-    }
 }
