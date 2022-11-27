@@ -40,14 +40,14 @@ class MemberServiceIntegrationTest {
     public void 중복_회원_예회(){
         //given
         Member member1 = new Member();
-        member1.setName("spring");
+        member1.setName("spring4");
 
         Member member2 = new Member();
-        member2.setName("spring");
+        member2.setName("spring5");
 
         //when
         memberService.join(member1);
-        IllegalStateException e = assertThrows(IllegalStateException.class, () -> memberService.join(member2));
+        IllegalStateException e = assertThrows(IllegalStateException.class, () -> memberService.join(member1));
 
         assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원 입니다.");
 //        try {
